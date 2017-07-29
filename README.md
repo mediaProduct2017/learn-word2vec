@@ -51,15 +51,19 @@ Singular Value Decomposition of cooccurence matrix (Computational cost scales qu
 
 PCA (principle component analysis)
 
+对于用降维方法求dense vector，如果有新的数据进来，是没法迭代的，只能从头开始重新计算；对于用神经网络模型拟合dense vector，如果有新的数据进来，只需要以当前的dense vector为初始值，然后对包括新数据的所有数据进行拟合即可(full batch gradient descent)，是可以迅速收敛的，甚至只对新数据进行拟合(stochatic gradient descent)也可以（当新数据量很大，源源不断产生时）。
+
 ## 4. Skip-gram
 
 Directly learn low-dimensional word vectors
 
-Skip-gram是一种用神经网络模型直接拟合词汇向量的方法，用来得到各个词的low dimentional vector。
+Skip-gram是一种用神经网络模型（softmax classifier）直接拟合词汇向量的方法，用来得到各个词的low dimentional vector。
+
+logistic classifier和softmax classifier，本质上就是神经网络模型，可以认为是广义的神经网络模型。
 
 word2vec算法所得到的词汇向量，用的就是skip-gram的方法。
 
-Skip-gram拟合的核心是从中心词到周围词的预测，参数的选择以预测最准为目标。优化的cost function关注的就是从中心词到周围词的预测的概率，目标是实际情况的概率最大。
+Skip-gram拟合的核心是从中心词到周围词的预测，是word2vec算法forward propagation计算的核心算法。不管选择什么样的cost function，参数的选择以预测最准为目标。优化的cost function关注的就是从中心词到周围词的预测的概率，目标是实际情况的概率最大。
 
 ## 5. Cost function
 
@@ -77,9 +81,13 @@ CE(y1i,y2i)=-sum(y1i*logy2i)
 
 对于多分类问题，只有实际分类的logyi项被保留
 
+从中间词的选取，到周围词的选取，本来应该是概率相乘，取log以后变成了相加。
+
 一般情况下，yi就用softmax function的pi来计算，对于从中心词到周围词的预测（skip-gram拟合word方法），参数包括所有词的向量
 
 在图像识别中，yi中的i表示不同的图片，yi表示具体的图像分类；对于从中心词到周围词的预测，yi中的i表示不同的位置，yi表示具体的词汇分类
+
+We may only update the word vectors that actually appear, only update certain columns of full embedding matrix U and V
 
 ## 7. Logistic cost function
 
@@ -90,6 +98,16 @@ y=1 or 0
 在logistic regression或者neural network中，可用于二分类问题，也可用于多分类问题
 
 ## 8. Negative sampling cost function
+
+Main idea: train binary logistic regressions for a true pair (center word and word in its context window) and a couple of random pairs (the center word with a random word)
+
+Define negative prediction that only samples a few words that do not appear in the context
+
+less frequent words be sampled more often
+
+设计一个数学函数，使得词汇在某个词周围出现的次数越少（频率越低），被选到充当negative words的频率越高
+
+Max. probability that real outside word appears, minimize prob. that random words appear around center word
 
 log(sigma(uo<sup>T</sup>v)) + sum(log(sigma(-uj<sup>T</sup>v))
 
@@ -116,4 +134,28 @@ p<sub>i</sub> = 1/(1+exp(-u<sub>i</sub>))
 特征值越大，说明矩阵在对应的特征向量上的方差越大，功率越大，信息量越多。
 应用到最优化中，意思就是对于R的二次型，自变量在这个方向上变化的时候，对函数值的影响最大，也就是该方向上的方向导数最大。
 应用到数据挖掘中，意思就是最大特征值对应的特征向量方向上包含最多的信息量，如果某几个特征值很小，说明这几个方向信息量很小，可以用来降维，也就是删除小特征值对应方向的数据，只保留大特征值方向对应的数据，这样做以后数据量减小，但有用信息量变化不大。
+
+## 11. 用gradient descent解决cost function的最优化问题
+
+gradient descent：要求计算cost function相对待拟合参数的导数，即gradient
+
+back propogation：本质上就是计算gradient，比如，derive the gradient for the internal vectors v<sub>c</sub>。当然，we also need gradients for outside vectors u
+
+To minimize ￼J(theta) over the full batch (the entire training data) would require us to compute gradients for all word windows
+
+￼J(theta)就是以theta为参数的cost function
+
+Substracting a fraction of the gradient moves you towards the minimum
+
+Stochastic gradient descent (SGD): We will update parameters after each window t
+
+Vanilla: 一个机器学习 Python 程序库，可以在需要Gradient Descent时使用
+
+## 12. 待拟合的参数
+
+In our case with d-dimensional vectors and V many words, the dimention of the parameter theta is 2dV。
+
+每一个word就可以充当center word，也可以充当outside word，所以最终维度乘以2.
+
+Every word has two vectors
 
