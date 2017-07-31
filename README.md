@@ -79,7 +79,7 @@ CE(y1i,y2i)=-sum(y1i*logy2i)
 
 负号是为了将最大化问题转化为最小化问题
 
-对于多分类问题，只有实际分类的logyi项被保留
+对于多分类问题，只有实际分类的logyi项被保留。在word2vec中使用cross entropy cost function时，只有中心词周围出现的词的exp(uo<sup>T</sup>v)才会出现在分子中，然后取log。With one-hot w<sub>t+j</sub> target, the only term left is the negative log probability of the true class.
 
 从中间词的选取，到周围词的选取，本来应该是概率相乘，取log以后变成了相加。
 
