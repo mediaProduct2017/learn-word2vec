@@ -89,6 +89,8 @@ CE(y1i,y2i)=-sum(y1i*logy2i)
 
 We may only update the word vectors that actually appear, only update certain columns of full embedding matrix U and V
 
+![Cross Entropy](images/cross.png)
+
 ## 7. Logistic cost function
 
 -sum(y*log(hx)+(1-y)*log(1-hx))
