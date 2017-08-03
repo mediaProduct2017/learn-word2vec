@@ -73,7 +73,7 @@ Cost function是数据拟合中的优化目标，通过在back propagation中实
 
 两个概率分布之间的距离度量，常用于loss function或者cost function，特别是分类问题（一般是多个类别）的cost function
 
-Kullback distance也可用于两个概率分布之间的距离度量
+Kullback distance也可用于两个概率分布之间的距离度量（Kullback distance和Cross entropy本质上是一样的，也可以使用Kullback distance cost function）
 
 CE(y1i,y2i)=-sum(y1i*logy2i)
 
@@ -83,6 +83,8 @@ CE(y1i,y2i)=-sum(y1i*logy2i)
 
 从中间词的选取，到周围词的选取，本来应该是概率相乘，取log以后变成了相加。
 
+一般的softmax及cross entropy问题，分子中exp的值多是Wx，W是待拟合的系数，x是已知的变量set，Wx是线性函数，但是，对于word2vec中用到的softmax及cross entropy，分子中exp的值是uo<sup>T</sup>v，uo是待拟合的系数，v也是待拟合的系数，两组系数相乘，也不再是线性函数。
+
 一般情况下，yi就用softmax function的pi来计算，对于从中心词到周围词的预测（skip-gram拟合word方法），参数包括所有词的向量
 
 在图像识别中，yi中的i表示不同的图片，yi表示具体的图像分类；对于从中心词到周围词的预测，yi中的i表示不同的位置，yi表示具体的词汇分类
@@ -90,6 +92,8 @@ CE(y1i,y2i)=-sum(y1i*logy2i)
 We may only update the word vectors that actually appear, only update certain columns of full embedding matrix U and V
 
 ![Cross Entropy](images/cross.png)
+
+p(c)是一个行向量，logq(c)是一个列向量，因为p(c)向量中只有一个元素是1，其他元素都是0，所以p(c)*logq(c)是一个值。
 
 ## 7. Logistic cost function
 
@@ -161,3 +165,12 @@ In our case with d-dimensional vectors and V many words, the dimention of the pa
 
 Every word has two vectors
 
+## 13. output word vector and center word vector
+
+Every word has two vectors: output word vector and center word vector.
+
+In many machine learning problems, we will average the output word vector and center word vector of a word to get the feature vector of the word.
+
+## 14. word vectors as features
+
+![word vectors](images/wordvector.png)
