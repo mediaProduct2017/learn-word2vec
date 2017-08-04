@@ -55,13 +55,15 @@ PCA (principle component analysis)
 
 ## 4. Skip-gram
 
+此处，gram是grammar的缩写，表示word window，skip-gram意思是word window不断的移动，来做拟合。
+
 Directly learn low-dimensional word vectors
 
 Skip-gram是一种用神经网络模型（softmax classifier）直接拟合词汇向量的方法，用来得到各个词的low dimentional vector。
 
 logistic classifier和softmax classifier，本质上就是神经网络模型，可以认为是广义的神经网络模型。
 
-word2vec算法所得到的词汇向量，用的就是skip-gram的方法。
+word2vec算法所得到的词汇向量，用的就是skip-gram的方法。word2vec is a neural network-based model.
 
 Skip-gram拟合的核心是从中心词到周围词的预测，是word2vec算法forward propagation计算的核心算法。不管选择什么样的cost function，参数的选择以预测最准为目标。优化的cost function关注的就是从中心词到周围词的预测的概率，目标是实际情况的概率最大。
 
@@ -106,6 +108,8 @@ y=1 or 0
 ## 8. Negative sampling cost function
 
 Main idea: train binary logistic regressions for a true pair (center word and word in its context window) and a couple of random pairs (the center word with a random word)
+
+Negative sampling方法最重要的两个参数，一是random word的个数k，二是在随机选取random word时所用到的数学函数的参数（比如从什么样的分布中随机选取）。这两个参数的选取的合适程度，在很大程度上影响word2vec的最终结果的优劣。
 
 Define negative prediction that only samples a few words that do not appear in the context
 
@@ -165,12 +169,17 @@ In our case with d-dimensional vectors and V many words, the dimention of the pa
 
 Every word has two vectors
 
-## 13. output word vector and center word vector
+## 13. word2vec的结果的evaluation
+
+用vector similarity (distributional similarity)来做evaluation，similar words should have close vectors.
+可以通过向量之差来比较，比如，如果向量国王-王后=向量男人-女人，就表明是不错的结果。
+
+## 14. output word vector and center word vector
 
 Every word has two vectors: output word vector and center word vector.
 
 In many machine learning problems, we will average the output word vector and center word vector of a word to get the feature vector of the word.
 
-## 14. word vectors as features
+## 15. word vectors as features
 
 ![word vectors](images/wordvector.png)
