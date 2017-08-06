@@ -159,7 +159,9 @@ Substracting a fraction of the gradient moves you towards the minimum
 
 Stochastic gradient descent (SGD): We will update parameters after each window t
 
-Vanilla: 一个机器学习 Python 程序库，可以在需要Gradient Descent时使用
+Vanilla: 一个机器学习 Python 程序库，可以在需要Gradient Descent时使用。
+
+Vanilla neural network指的是只有单层输入（不像RecurrentNN那样有额外的输入），对于一个相比也只有单个输出的neural network（不像RecurrentNN那样有一组输出的neural network，比如输出一组单词）。
 
 ## 12. 待拟合的参数
 
