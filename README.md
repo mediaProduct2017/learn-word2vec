@@ -65,6 +65,8 @@ logistic classifier和softmax classifier，本质上就是神经网络模型，�
 
 word2vec算法所得到的词汇向量，用的就是skip-gram的方法。word2vec is a neural network-based model.
 
+word2vec算法可以认为是一个三层的neural network，第一层到第二层是word vector到相似度度量u<sup>T</sup>v的映射，第二层到第三层是softmax classifier的使用。
+
 Skip-gram拟合的核心是从中心词到周围词的预测，是word2vec算法forward propagation计算的核心算法。不管选择什么样的cost function，参数的选择以预测最准为目标。优化的cost function关注的就是从中心词到周围词的预测的概率，目标是实际情况的概率最大。
 
 ## 5. Cost function
