@@ -67,7 +67,11 @@ word2vec算法所得到的词汇向量，用的就是skip-gram的方法。word2v
 
 word2vec算法可以认为是一个三层的neural network，第一层到第二层是word vector到相似度度量u<sup>T</sup>v的映射，第二层到第三层是softmax classifier的使用。
 
+softmax classifier的分母，是所有词与center word的相似度度量u<sup>T</sup>v的加和，要用到所有词的word vector. 
+
 Skip-gram拟合的核心是从中心词到周围词的预测，是word2vec算法forward propagation计算的核心算法。不管选择什么样的cost function，参数的选择以预测最准为目标。优化的cost function关注的就是从中心词到周围词的预测的概率，目标是实际情况的概率最大。
+
+在cost function计算中，数据中出现的每个词都会充当center word，来看周围的word window，看其他词是出现在这个word window中，还是没有出现。如果用的是Cross entropy cost function，对于一个center word，周围词的出现概率取log后求和。对于不同的center word的结果，也就是各个cross entropy之间，也是要求和的。取负号后，求解最小化问题。
 
 ## 5. Cost function
 
@@ -121,7 +125,7 @@ less frequent words be sampled more often
 
 Max. probability that real outside word appears, minimize prob. that random words appear around center word
 
-log(sigma(uo<sup>T</sup>v)) + sum(log(sigma(-uj<sup>T</sup>v))
+log(sigma(uo<sup>T</sup>v)) + sum(log(sigma(-uj<sup>T</sup>v)) ------- 表达式（1）
 
 -sum(y*log(sigma(uo<sup>T</sup>v)) + (1-y)*log(sigma(-uj<sup>T</sup>v))
 
@@ -133,6 +137,10 @@ y=1: output word在window中
 y=0: output word不在window中，是随机抽签的结果
 
 参数包括y=1的词的向量，以及被随机抽中的y=0的词的向量，不像cross entropy cost function, 参数包括所有词的向量
+
+对于某一个center word的vector v，是上面的表达式（1）。对于不同的center word的结果，也就是不同的v所对应的不同的表达式（1），要再次求和得到最终要优化的cost function.
+
+负采样算法是怎样优化计算量的：优化前（普通的cross entropy算法），在计算center word周围出现某个词的概率时，是要用到所有词的vector的。所谓负采样，就是不再用到所有词的vector，对于在center word周围不出现的词，只随机取一个很小的子集，其word vector用于概率计算，所以计算量就减小了。
 
 ## 9. Sigmoid function
 
