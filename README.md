@@ -129,7 +129,7 @@ log(sigma(uo<sup>T</sup>v)) + sum(log(sigma(-uj<sup>T</sup>v)) ------- 表达式
 
 -sum(y*log(sigma(uo<sup>T</sup>v)) + (1-y)*log(sigma(-uj<sup>T</sup>v))
 
-结果与logistic cost function有相似的地方
+结果与logistic cost function有相似的地方，此处的sigma指的是sigmoid function，也就是logistic function.
 
 window中的某个位置的分类是某个词i，对这个词i来讲，yi=1
 
