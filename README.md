@@ -73,6 +73,8 @@ Skip-gram拟合的核心是从中心词到周围词的预测，是word2vec算法
 
 在cost function计算中，数据中出现的每个词都会充当center word，来看周围的word window，看其他词是出现在这个word window中，还是没有出现。如果用的是Cross entropy cost function，对于一个center word，周围词的出现概率取log后求和。对于不同的center word的结果，也就是各个cross entropy之间，也是要求和的。取负号后，求解最小化问题。
 
+除了skip-gram，还有一种拟合word2vec的算法叫做CBOW，是给出word window中周围词的向量，求中心词的向量。再由中心词的向量来给出中心词的分类(一般用softmax来做)，看中心词到底是哪个词。
+
 ## 5. Cost function
 
 Cost function是数据拟合中的优化目标，通过在back propagation中实现cost function的最优化，可以得到需要拟合的参数
@@ -195,3 +197,46 @@ In many machine learning problems, we will average the output word vector and ce
 ## 15. word vectors as features
 
 ![word vectors](images/wordvector.png)
+
+## 16. 中文维基百科用于拟合Word2Vec
+
+gensim用于拟合Word2Vec
+
+Memory
+
+At its core, word2vec model parameters are stored as matrices (NumPy arrays). Each array is #vocabulary (controlled by min_count parameter) times #size (size parameter) of floats (single precision aka 4 bytes).
+
+Three such matrices are held in RAM (work is underway to reduce that number to two, or even one). So if your input contains 100,000 unique words, and you asked for layer size=200, the model will require approx. 100,000*200*4*3 bytes = ~229MB.
+
+如果是300万个词，所需要的内存就是230*30=6900MB=6.9GB.
+
+不仅是训练，哪怕只是导入词向量，如果300万个词的话，电脑的内存至少也要8G.
+
+中文数据的下载地址是：https://dumps.wikimedia.org/zhwiki/latest/zhwiki-latest-pages-articles.xml.bz2。
+
+以下谈到的python文件在这里：
+
+[DuReader/wiki-word2vec/](https://github.com/arfu2016/DuReader/tree/master/wiki-word2vec)
+
+首先用 process_wiki.py处理这个XML压缩文件，执行：python process_wiki.py data/zhwiki-latest-pages-articles.xml.bz2 data/wiki.zh.text
+
+查看之后发现，除了加杂一些英文词汇外，还有很多繁体字混迹其中.
+
+英文等外语词汇可以用正则去除掉，繁体字转简体字可以用[opencc-python](https://github.com/yichen0831/opencc-python)来完成。同时做分词，可以用jieba.
+
+执行：python word_segment.py data/wiki.zh.text data/wiki.zh.text.seg
+
+有了中文维基百科的分词数据，就可以执行word2vec模型训练了：
+
+python train_word2vec_model.py data/wiki.zh.text.seg wiki.zh.model wiki.zh.vector
+
+接下来，可以评估word vector的效果：
+
+python zh_vector_evaluation.py
+
+各种word vector
+
+[word2vec](https://github.com/hankcs/HanLP/wiki/word2vec)
+
+都不推荐，看过fasttext的词向量，质量不敢恭维；另外，30万词汇量是不够的，要上百万才行，最好300万。
+
