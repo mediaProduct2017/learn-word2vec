@@ -240,8 +240,29 @@ python zh_vector_evaluation.py
 
 都不推荐，看过fasttext的词向量，质量不敢恭维；另外，30万词汇量是不够的，要上百万才行，最好300万。
 
-## 17.英文Word2Vec
+如果要载入fasttext的词向量，也很简单
+
+[word2vec_load_fasttext.py](https://github.com/arfu2016/DuReader/blob/master/wiki-word2vec/word2vec_load_fasttext.py)
+
+## 17. 英文Word2Vec
 
 google给出一个word2vec的结果，300维，300万个词，一般来说足够用了
 
 [word2vec_load_evaluation.py](https://github.com/arfu2016/DuReader/blob/master/gensim2/word2vec_load_evaluation.py)
+
+以下谈到的python文件在这里：
+
+[DuReader/gensim2](https://github.com/arfu2016/DuReader/tree/master/gensim2)
+
+首先，用英文文本训练word2vec也比较简单，语料用wikipedia的部分text8，用text8_fit.py就可以得到拟合出来的词向量
+
+其次，we can improve word vectors by google vectors，在已有模型的基础上，让词向量采取google vectors的值，然后进一步训练，用word2vec_merge_google.py可以实现这一目的。针对结果也可以做评估（比如用analogy task），用word2vec_evaluation.py来实现。
+
+最后，在训练时可以加入新的vocabulary，覆盖更多的词汇，用retrain_new_vacabulary.py来实现。
+
+## 18. 用pca降维展示word2vec
+
+先把word2vec的txt文件转换为json文件: [retrieve_vec.py](https://github.com/arfu2016/nlp/blob/master/nlp_models/pca/retrieve_vec.py)
+
+然后利用json文件做pca: [apply_vec.py](https://github.com/arfu2016/nlp/blob/master/nlp_models/pca/apply_vec.py)
+
