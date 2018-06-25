@@ -240,3 +240,8 @@ python zh_vector_evaluation.py
 
 都不推荐，看过fasttext的词向量，质量不敢恭维；另外，30万词汇量是不够的，要上百万才行，最好300万。
 
+## 17.英文Word2Vec
+
+google给出一个word2vec的结果，300维，300万个词，一般来说足够用了
+
+[word2vec_load_evaluation.py](https://github.com/arfu2016/DuReader/blob/master/gensim2/word2vec_load_evaluation.py)
