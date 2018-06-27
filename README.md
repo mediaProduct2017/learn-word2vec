@@ -272,7 +272,13 @@ word2vec的结果统计
 
 [word2vec_vocab](https://github.com/arfu2016/nlp/tree/master/nlp_models)
 
+word2vec结果的简单评估
 
+[zh_word2vec_evaluation](https://github.com/arfu2016/nlp/tree/master/nlp_models/zh_word2vec_evaluation)
+
+英文word2vec用analogy task进行评估
+
+[word2vec-benchmark](https://github.com/arfu2016/nlp/tree/master/nlp_data/large/word2vec-benchmark)
 
 ## 18. 用pca降维展示word2vec
 
