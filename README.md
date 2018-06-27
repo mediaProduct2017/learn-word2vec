@@ -260,6 +260,14 @@ google给出一个word2vec的结果，300维，300万个词，一般来说足够
 
 最后，在训练时可以加入新的vocabulary，覆盖更多的词汇，用retrain_new_vacabulary.py来实现。
 
+更新google word2vec的结果：
+
+[google_retrain](https://github.com/arfu2016/nlp/tree/master/nlp_models/google_retrain)
+
+在word2vec中增加新的vocabulary
+
+[retrain_new_vocabulary](https://github.com/arfu2016/nlp/tree/master/nlp_models/retrain_new_vocabulary)
+
 ## 18. 用pca降维展示word2vec
 
 先把word2vec的txt文件转换为json文件: [retrieve_vec.py](https://github.com/arfu2016/nlp/blob/master/nlp_models/pca/retrieve_vec.py)
