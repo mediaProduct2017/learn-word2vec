@@ -224,7 +224,13 @@ Three such matrices are held in RAM (work is underway to reduce that number to t
 
 [DuReader/wiki-word2vec/](https://github.com/arfu2016/DuReader/tree/master/wiki-word2vec)
 
-首先用 process_wiki.py处理这个XML压缩文件，执行：python process_wiki.py data/zhwiki-latest-pages-articles.xml.bz2 data/wiki.zh.text
+首先用 process_wiki.py处理这个XML压缩文件，执行：python process_wiki.py data/zhwiki-latest-pages-articles.xml.bz2 data/wiki.zh.text，目的是把XML压缩文件转成普通的文本文件
+
+这个处理方法来自于这篇文章，[中英文维基百科语料上的Word2Vec实验](https://radimrehurek.com/gensim/corpora/wikicorpus.html)
+
+process_wiki.py的方法本身也是有一些问题的，如这篇文章[ChineseWiki](https://github.com/mattzheng/ChineseWiki/blob/master/README.md)提到的。
+
+除了上面的脚本，还可以使用苏神提供的脚本[获取并处理中文维基百科语料](https://spaces.ac.cn/archives/4176)来把XML压缩文件转成普通的文本文件。
 
 查看之后发现，除了加杂一些英文词汇外，还有很多繁体字混迹其中.
 
