@@ -230,6 +230,10 @@ Three such matrices are held in RAM (work is underway to reduce that number to t
 
 process_wiki.py的方法本身也是有一些问题的，如这篇文章[ChineseWiki](https://github.com/mattzheng/ChineseWiki/blob/master/README.md)提到的。
 
+其中提到的从中文维基百科整理句子的脚本[extract]
+
+这篇文章对应的[pdf]
+
 除了上面的脚本，还可以使用苏神提供的脚本[获取并处理中文维基百科语料](https://spaces.ac.cn/archives/4176)来把XML压缩文件转成普通的文本文件。
 
 查看之后发现，除了加杂一些英文词汇外，还有很多繁体字混迹其中.
