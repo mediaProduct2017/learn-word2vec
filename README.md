@@ -230,11 +230,13 @@ Three such matrices are held in RAM (work is underway to reduce that number to t
 
 process_wiki.py的方法本身也是有一些问题的，如这篇文章[ChineseWiki](https://github.com/mattzheng/ChineseWiki/blob/master/README.md)提到的。
 
-其中提到的从中文维基百科整理句子的脚本[extract]
-
-这篇文章对应的[pdf]
-
 除了上面的脚本，还可以使用苏神提供的脚本[获取并处理中文维基百科语料](https://spaces.ac.cn/archives/4176)来把XML压缩文件转成普通的文本文件。
+
+其中提到的从中文维基百科整理句子的脚本[extract](https://github.com/mediaProduct2017/learn-word2vec/blob/master/extract.py)
+
+这篇文章对应的[pdf](https://github.com/mediaProduct2017/learn-word2vec/blob/master/retrieve_wiki.pdf).
+
+注意用于语言模型拟合的话，一般标点符号最好是保留的。然后根据句号、叹号、问号等分句，放在不同的行。在同一行，从start开始预测第一个词，一直到预测最后一个词eos (end of sentence).
 
 查看之后发现，除了加杂一些英文词汇外，还有很多繁体字混迹其中.
 
